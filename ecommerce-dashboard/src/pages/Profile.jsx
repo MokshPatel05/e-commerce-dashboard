@@ -40,7 +40,6 @@ const Profile = () => {
     setError('');
     setSuccess('');
 
-    // Validation
     if (!formData.name || !formData.email) {
       setError('Name and email are required');
       return;
@@ -52,7 +51,6 @@ const Profile = () => {
       return;
     }
 
-    // If changing password
     if (formData.newPassword || formData.confirmPassword) {
       if (!formData.currentPassword) {
         setError('Current password is required to change password');
@@ -69,7 +67,6 @@ const Profile = () => {
         return;
       }
 
-      // Verify current password
       const users = JSON.parse(localStorage.getItem('users') || '[]');
       const currentUser = users.find(u => u.email === user.email);
       
@@ -93,7 +90,6 @@ const Profile = () => {
       setSuccess('Profile updated successfully!');
       setIsEditing(false);
       
-      // Clear password fields
       setFormData(prev => ({
         ...prev,
         currentPassword: '',
@@ -123,7 +119,6 @@ const Profile = () => {
       <Navbar />
       
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
             Profile Settings
@@ -133,9 +128,7 @@ const Profile = () => {
           </p>
         </div>
 
-        {/* Profile Card */}
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
-          {/* Profile Header */}
           <div className="bg-gradient-to-r from-primary-500 to-primary-700 p-8 text-white">
             <div className="flex items-center space-x-4">
               <div className="bg-white p-4 rounded-full">
@@ -148,7 +141,6 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Profile Form */}
           <div className="p-8">
             {error && (
               <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
@@ -162,7 +154,6 @@ const Profile = () => {
               </div>
             )}
 
-            {/* View mode - shown when not editing */}
             {!isEditing && (
               <div className="space-y-6">
                 <div>
@@ -212,10 +203,8 @@ const Profile = () => {
               </div>
             )}
 
-            {/* Edit mode - shown when editing */}
             {isEditing && (
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Full Name
@@ -235,7 +224,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email Address
@@ -255,7 +243,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Password Fields */}
                 <div className="pt-6 border-t border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Change Password (Optional)
@@ -324,7 +311,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-6">
                   <button
                     type="submit"

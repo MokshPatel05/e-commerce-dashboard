@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShoppingCart, Star } from 'lucide-react';
 
+const USD_TO_INR = 83;
+
 const ProductCard = ({ product, onAddToCart, isInCart }) => {
   return (
     <div className="card hover:shadow-lg transition-shadow duration-300">
@@ -38,7 +40,7 @@ const ProductCard = ({ product, onAddToCart, isInCart }) => {
         
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-primary-600">
-            ${product.price.toFixed(2)}
+            ₹{Math.round(product.price * USD_TO_INR).toLocaleString('en-IN')}
           </span>
           
           <button

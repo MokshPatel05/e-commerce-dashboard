@@ -4,6 +4,8 @@ import { ShoppingCart, Minus, Plus, Trash2, Package } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { useCart } from '../context/CartContext';
 
+const USD_TO_INR = 83;
+
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
 
@@ -43,7 +45,6 @@ const Cart = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
             Shopping Cart
@@ -54,12 +55,10 @@ const Cart = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cart.map((item) => (
               <div key={item.id} className="bg-white rounded-xl shadow-md p-6">
                 <div className="flex flex-col sm:flex-row gap-6">
-                  {/* Product Image */}
                   <div className="flex-shrink-0">
                     <img
                       src={item.image}
@@ -68,7 +67,6 @@ const Cart = () => {
                     />
                   </div>
 
-                  {/* Product Details */}
                   <div className="flex-1 min-w-0">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
                       {item.title}
@@ -78,7 +76,6 @@ const Cart = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      {/* Quantity Controls */}
                       <div className="flex items-center space-x-3">
                         <span className="text-sm font-medium text-gray-700">Quantity:</span>
                         <div className="flex items-center border border-gray-300 rounded-lg">
@@ -100,12 +97,11 @@ const Cart = () => {
                         </div>
                       </div>
 
-                      {/* Price and Remove */}
                       <div className="flex items-center justify-between sm:justify-end gap-4">
                         <div className="text-right">
                           <p className="text-sm text-gray-600">Price</p>
                           <p className="text-xl font-bold text-primary-600">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            ₹{Math.round(item.price * USD_TO_INR * item.quantity).toLocaleString('en-IN')}
                           </p>
                         </div>
                         <button
@@ -122,7 +118,6 @@ const Cart = () => {
               </div>
             ))}
 
-            {/* Clear Cart Button */}
             <button
               onClick={clearCart}
               className="w-full sm:w-auto px-6 py-3 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors font-medium"
@@ -131,7 +126,6 @@ const Cart = () => {
             </button>
           </div>
 
-          {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
               <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
@@ -139,22 +133,22 @@ const Cart = () => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-600">
                   <span>Subtotal ({cart.reduce((sum, item) => sum + item.quantity, 0)} items)</span>
-                  <span className="font-medium">${getCartTotal().toFixed(2)}</span>
+                  <span className="font-medium">₹{Math.round(getCartTotal() * USD_TO_INR).toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Shipping</span>
+                  <span>Delivery</span>
                   <span className="font-medium text-green-600">Free</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Tax</span>
-                  <span className="font-medium">${(getCartTotal() * 0.1).toFixed(2)}</span>
+                  <span>GST (18%)</span>
+                  <span className="font-medium">₹{Math.round(getCartTotal() * USD_TO_INR * 0.18).toLocaleString('en-IN')}</span>
                 </div>
                 
                 <div className="border-t border-gray-200 pt-4">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold text-gray-900">Total</span>
                     <span className="text-2xl font-bold text-primary-600">
-                      ${(getCartTotal() * 1.1).toFixed(2)}
+                      ₹{Math.round(getCartTotal() * USD_TO_INR * 1.18).toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>

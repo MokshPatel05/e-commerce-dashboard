@@ -13,17 +13,14 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('default');
 
-  // Get unique categories
   const categories = useMemo(() => {
     const cats = [...new Set(products.map(p => p.category))];
     return ['all', ...cats];
   }, [products]);
 
-  // Filter and sort products
   const filteredProducts = useMemo(() => {
     let filtered = products;
 
-    // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter(product =>
         product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -31,12 +28,10 @@ const Products = () => {
       );
     }
 
-    // Filter by category
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(product => product.category === selectedCategory);
     }
 
-    // Sort products
     switch (sortBy) {
       case 'price-low':
         filtered = [...filtered].sort((a, b) => a.price - b.price);
@@ -67,7 +62,6 @@ const Products = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
             Our Products
@@ -77,10 +71,8 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Filters and Search */}
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Search */}
             <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Search Products
@@ -99,7 +91,6 @@ const Products = () => {
               </div>
             </div>
 
-            {/* Category Filter */}
             <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Category
@@ -122,7 +113,6 @@ const Products = () => {
               </div>
             </div>
 
-            {/* Sort */}
             <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Sort By
@@ -140,7 +130,6 @@ const Products = () => {
             </div>
           </div>
 
-          {/* Results count */}
           <div className="mt-4 pt-4 border-t border-gray-200">
             <p className="text-sm text-gray-600">
               Showing <span className="font-semibold">{filteredProducts.length}</span> of{' '}
@@ -148,8 +137,6 @@ const Products = () => {
             </p>
           </div>
         </div>
-
-        {/* Products Grid */}
         {loading ? (
           <div className="flex justify-center py-20">
             <LoadingSpinner size="lg" text="Loading products..." />

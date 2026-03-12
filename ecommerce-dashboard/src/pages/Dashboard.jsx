@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import Navbar from '../components/Navbar';
 
+const USD_TO_INR = 83;
+
 const Dashboard = () => {
   const { user } = useAuth();
   const { getCartItemsCount, getCartTotal } = useCart();
@@ -19,7 +21,7 @@ const Dashboard = () => {
     },
     {
       label: 'Cart Total',
-      value: `$${getCartTotal().toFixed(2)}`,
+      value: `\u20b9${Math.round(getCartTotal() * USD_TO_INR).toLocaleString('en-IN')}`,
       icon: TrendingUp,
       color: 'bg-green-500',
       link: '/cart',
@@ -45,7 +47,6 @@ const Dashboard = () => {
       <Navbar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
             Welcome back, {user?.name}! 👋
@@ -55,7 +56,6 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <Link
@@ -76,9 +76,7 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {/* Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Featured Action Card */}
           <div className="bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl shadow-lg p-8 text-white">
             <h2 className="text-2xl font-bold mb-4">Start Shopping</h2>
             <p className="mb-6 text-primary-100">
@@ -92,7 +90,6 @@ const Dashboard = () => {
             </Link>
           </div>
 
-          {/* Account Info Card */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Account Information</h2>
             <div className="space-y-4">
@@ -116,7 +113,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Tips Section */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">💡 Quick Tip</h3>
           <p className="text-blue-800">

@@ -8,7 +8,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing session on mount
     const storedUser = localStorage.getItem('currentUser');
     const storedExpiry = localStorage.getItem('sessionExpiry');
 
@@ -18,7 +17,6 @@ export const AuthProvider = ({ children }) => {
         setUser(JSON.parse(storedUser));
         setSessionExpiry(expiryTime);
       } else {
-        // Session expired
         logout();
       }
     }
@@ -26,7 +24,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // Check session expiry every second
     if (sessionExpiry) {
       const interval = setInterval(() => {
         if (Date.now() >= sessionExpiry) {
@@ -42,7 +39,6 @@ export const AuthProvider = ({ children }) => {
   const register = (userData) => {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     
-    // Check if user already exists
     const userExists = users.some(u => u.email === userData.email);
     if (userExists) {
       throw new Error('User already exists with this email');
@@ -60,7 +56,6 @@ export const AuthProvider = ({ children }) => {
       throw new Error('Invalid email or password');
     }
 
-    // Create session valid for 5 minutes
     const expiry = Date.now() + (5 * 60 * 1000);
     
     const userWithoutPassword = { name: user.name, email: user.email };
@@ -86,11 +81,9 @@ export const AuthProvider = ({ children }) => {
       throw new Error('User not found. Please log out and log in again.');
     }
 
-    // Update user in users array
     users[userIndex] = { ...users[userIndex], ...updatedData };
     localStorage.setItem('users', JSON.stringify(users));
 
-    // Update current user session
     const userWithoutPassword = { name: updatedData.name, email: updatedData.email };
     setUser(userWithoutPassword);
     localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
